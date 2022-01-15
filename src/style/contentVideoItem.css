@@ -1,0 +1,25 @@
+.item {
+    cursor: pointer;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    font-size: 1rem;
+    font-weight: 500;
+    max-height: 4rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+.channel {
+    font-size: 1rem;
+    font-weight: 400;
+    max-height: 4rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
