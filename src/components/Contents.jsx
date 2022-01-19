@@ -7,7 +7,7 @@ import '../style/contents.css';
 const MAX_RESULT = 25;
 
 const Contents = () => {
-    const [videoList, setVideoList] = useState();
+    const [videos, setVideos] = useState();
 
     useEffect(() => {
         const config = {
@@ -18,7 +18,7 @@ const Contents = () => {
 
         axios(config)
             .then(({ data }) => {
-                setVideoList(data.items);
+                setVideos(data.items);
             })
             .catch((error) => {
                 console.log(error);
@@ -28,7 +28,7 @@ const Contents = () => {
 
     return (
         <div className='list'>
-            {videoList && videoList.map(video => <ContentVideoItem key={video.id} video={video} />)}
+            {videos && videos.map(video => <ContentVideoItem key={video.id} video={video} />)}
         </div>
     );
 }
