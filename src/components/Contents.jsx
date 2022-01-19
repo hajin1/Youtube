@@ -19,7 +19,6 @@ const Contents = () => {
         axios(config)
             .then(({ data }) => {
                 setVideoList(data.items);
-                console.log(data.items);
             })
             .catch((error) => {
                 console.log(error);
