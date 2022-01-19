@@ -29,7 +29,7 @@ const Contents = () => {
 
     return (
         <div className='list'>
-            {videoList && videoList.map(video => <ContentVideoItem video={video} />)}
+            {videoList && videoList.map(video => <ContentVideoItem key={video.id} video={video} />)}
         </div>
     );
 }
