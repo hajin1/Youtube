@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { YOUTUBE_API_URL, YOUTUBE_API_KEY } from '../consts/consts';
 import ContentVideoItem from './ContentVideoItem';
-import '../style/contents.css';
+import styles from '../style/contents.module.css';
 
 const MAX_RESULT = 25;
 
@@ -27,7 +27,7 @@ const Contents = () => {
     }, []);
 
     return (
-        <div className='list'>
+        <div className={styles.list}>
             {videos && videos.map(video => <ContentVideoItem key={video.id} video={video} />)}
         </div>
     );

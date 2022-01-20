@@ -8,7 +8,7 @@
     align-items: center;
 }
 
-.logo-wrapper{
+.logoWrapper {
     flex-grow: 2;
     height: 100%;
 }
@@ -18,7 +18,7 @@
     width: 120px;
 }
 
-.search-wrapper {
+.searchWrapper {
     display: flex;
     height: 40px;
     flex-grow: 5;

@@ -1,13 +1,13 @@
 import logo from '../resources/youtubeLogo.svg';
-import '../style/header.css';
+import styles from '../style/header.module.css';
 
 const Header = () => {
     return (
-        <div className="header">
-            <div className='logo-wrapper'>
-                <img src={logo} alt="logo" className='logo' />
+        <div className={styles.header}>
+            <div className={styles.logoWrapper}>
+                <img src={logo} alt="logo" className={styles.logo} />
             </div>
-            <div className='search-wrapper'>
+            <div className={styles.searchWrapper}>
                 <input></input>
                 <button>검색</button>
             </div>

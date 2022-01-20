@@ -1,8 +1,14 @@
-.item {
+.video {
+    width: 30%;
+    padding: 0.2em;
     cursor: pointer;
-    width: 320px;
     display: flex;
     flex-direction: column;
+    transition: transform 250ms ease-in;
+}
+
+.video:hover {
+    transform: scale(1.02);
 }
 
 .title {

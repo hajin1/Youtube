@@ -1,20 +1,17 @@
-import '../style/contentVideoItem.css';
+import styles from '../style/contentVideoItem.module.css';
 
-const ContentVideoItem = ({ video }) => {
-    const snippet = video.snippet;
+const ContentVideoItem = ({ video: { snippet } }) => {
 
     return (
-        <div className="item">
-            <div className="thumbnail-wrapper">
-                <img alt="thumbnail" src={snippet.thumbnails.medium.url} className="thumbnail" />
-            </div>
-            <div className='title'>
+        <div className={styles.video}>
+            <img width={'100%'} alt="thumbnail" src={snippet.thumbnails.medium.url} className="thumbnail" />
+            <div className={styles.title}>
                 {snippet.title}
             </div>
-            <div className='channel'>
+            <div className={styles.channel}>
                 {snippet.channelTitle}
             </div>
-        </div>
+        </div >
     )
 }
 
