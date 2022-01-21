@@ -2,14 +2,17 @@ import { useRef } from 'react';
 import logo from '../resources/youtubeLogo.svg';
 import styles from '../style/header.module.css';
 
-const Header = ({ setSearchWord }) => {
+const Header = ({ onSearch }) => {
     const inputRef = useRef();
-    const onSubmit = () => {
+    const handleSearch = () => {
         const value = inputRef.current.value;
-        setSearchWord(value);
+        onSearch(value);
+    }
+    const onClick = () => {
+        handleSearch();
     }
     const onKeyPress = (e) => {
-        (e.key === 'Enter') && onSubmit();
+        (e.key === 'Enter') && handleSearch();
     }
 
     return (
@@ -19,7 +22,7 @@ const Header = ({ setSearchWord }) => {
             </div>
             <div className={styles.searchWrapper}>
                 <input onKeyPress={onKeyPress} ref={inputRef} className={styles.input} type="search" placeholder='Search...'></input>
-                <button className={styles.button} onSubmit={onSubmit} type="submit">
+                <button className={styles.button} onClick={onClick} type="submit">
                     <img className={styles.img} src="/images/search.png" alt="search" />
                 </button>
             </div>
