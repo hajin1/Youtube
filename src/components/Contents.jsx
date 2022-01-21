@@ -6,13 +6,16 @@ import styles from '../style/contents.module.css';
 
 const MAX_RESULT = 25;
 
-const Contents = () => {
+const Contents = ({ searchWord }) => {
     const [videos, setVideos] = useState();
 
     useEffect(() => {
+        const url = (searchWord) ?
+            `${YOUTUBE_API_URL}/search?part=snippet&maxResults=${MAX_RESULT}&q=${searchWord}&key=${YOUTUBE_API_KEY}`
+            : `${YOUTUBE_API_URL}/videos?part=snippet&chart=mostPopular&maxResults=${MAX_RESULT}&key=${YOUTUBE_API_KEY}`
         const config = {
             method: 'get',
-            url: `${YOUTUBE_API_URL}/videos?part=snippet&chart=mostPopular&maxResults=${MAX_RESULT}&key=${YOUTUBE_API_KEY}`,
+            url: url,
             headers: {}
         };
 
@@ -24,11 +27,14 @@ const Contents = () => {
                 console.log(error);
             });
 
-    }, []);
+        return (() => {
+            setVideos([]);
+        });
+    }, [searchWord]);
 
     return (
         <div className={styles.list}>
-            {videos && videos.map(video => <ContentVideoItem key={video.id} video={video} />)}
+            {videos && videos.map(video => <ContentVideoItem key={video.etag} video={video} />)}
         </div>
     );
 }
