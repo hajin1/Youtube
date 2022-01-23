@@ -1,10 +1,16 @@
 import { useEffect, useState } from 'react';
 import Contents from './components/Contents';
 import Header from './components/Header';
+import VideoDetail from './components/VideoDetail';
 import styles from './style/app.module.css';
 
 const App = ({ youtube }) => {
   const [videos, setVideos] = useState();
+  const [selectedVideo, setSelectedVideo] = useState(null);
+
+  const selectVideo = (video) => {
+    setSelectedVideo(video);
+  };
   const search = (value) => {
     youtube.search(value)
       .then(videos => setVideos(videos));
@@ -18,7 +24,14 @@ const App = ({ youtube }) => {
   return (
     <div className={styles.app}>
       <Header onSearch={search} />
-      <Contents videos={videos} />
+      <section className={styles.content}>
+        {selectedVideo && <div className={styles.detail}>
+          <VideoDetail video={selectedVideo} />
+        </div>}
+        <div className={styles.list}>
+          <Contents videos={videos} onVideoClick={selectVideo} display={selectedVideo ? 'grid' : 'list'} />
+        </div>
+      </section>
     </div>
   );
 }
