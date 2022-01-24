@@ -1,6 +1,7 @@
+import { memo } from 'react';
 import styles from '../style/contentVideoItem.module.css';
 
-const ContentVideoItem = ({ video, video: { snippet }, onVideoClick, display }) => {
+const ContentVideoItem = memo(({ video, video: { snippet }, onVideoClick, display }) => {
     const displayType = display === 'list' ? styles.list : styles.grid;
 
     return (
@@ -13,7 +14,7 @@ const ContentVideoItem = ({ video, video: { snippet }, onVideoClick, display }) 
                 {snippet.channelTitle}
             </div>
         </div >
-    )
-}
+    );
+});
 
 export default ContentVideoItem;

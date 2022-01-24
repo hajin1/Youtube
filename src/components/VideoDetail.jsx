@@ -1,6 +1,7 @@
+import { memo } from 'react';
 import styles from '../style/videoDetail.module.css';
 
-const VideoDetail = ({ video, video: { snippet } }) => {
+const VideoDetail = memo(({ video, video: { snippet } }) => {
     return (
         <section className={styles.detail}>
             <iframe
@@ -10,14 +11,14 @@ const VideoDetail = ({ video, video: { snippet } }) => {
                 title={snippet.title}
                 id="ytplayer" type="text/html"
                 src={`https://www.youtube.com/embed/${video.id}`}
-                frameborder="0"
-                allowfullscreen
+                frameBorder="0"
+                allowFullScreen
             ></iframe>
             <h2>{snippet.title}</h2>
             <h3>{snippet.channelTitle}</h3>
             <pre className={styles.description}>{snippet.description}</pre>
         </section >
     );
-};
+});
 
 export default VideoDetail;

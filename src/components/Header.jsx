@@ -1,8 +1,8 @@
-import { useRef } from 'react';
+import { memo, useRef } from 'react';
 import logo from '../resources/youtubeLogo.svg';
 import styles from '../style/header.module.css';
 
-const Header = ({ onSearch, onLogoClick }) => {
+const Header = memo(({ onSearch, onLogoClick }) => {
     const inputRef = useRef();
     const handleSearch = () => {
         const value = inputRef.current.value;
@@ -28,6 +28,6 @@ const Header = ({ onSearch, onLogoClick }) => {
             </div>
         </div>
     )
-}
+});
 
 export default Header;
