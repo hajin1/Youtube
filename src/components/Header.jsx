@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import logo from '../resources/youtubeLogo.svg';
 import styles from '../style/header.module.css';
 
-const Header = ({ onSearch }) => {
+const Header = ({ onSearch, onLogoClick }) => {
     const inputRef = useRef();
     const handleSearch = () => {
         const value = inputRef.current.value;
@@ -17,7 +17,7 @@ const Header = ({ onSearch }) => {
 
     return (
         <div className={styles.header}>
-            <div className={styles.logoWrapper}>
+            <div className={styles.logoWrapper} onClick={onLogoClick}>
                 <img src={logo} alt="logo" className={styles.logo} />
             </div>
             <div className={styles.searchWrapper}>
