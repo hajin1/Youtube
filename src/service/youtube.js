@@ -1,30 +1,29 @@
-import axios from "axios";
 const MAX_RESULT = 25;
-export const YOUTUBE_API_URL = `https://youtube.googleapis.com/youtube/v3`;
 class Youtube {
-    constructor(key) {
-        this.key = key;
-
-        this.getRequestOptions = {
-            method: 'get',
-            headers: {}
-        };
+    constructor(httpClient) {
+        this.youtube = httpClient;
     }
 
     async mostPopular() {
-        const { data } = await axios({
-            url: `${YOUTUBE_API_URL}/videos?part=snippet&chart=mostPopular&maxResults=${MAX_RESULT}&key=${this.key}`,
-            ...this.getRequestOptions
+        const response = await this.youtube.get('videos', {
+            params: {
+                part: 'snippet',
+                chart: 'mostPopular',
+                maxResults: MAX_RESULT,
+            },
         });
-        return data.items;
+        return response.data.items;
     };
 
     async search(query) {
-        const { data } = await axios({
-            url: `${YOUTUBE_API_URL}/search?part=snippet&maxResults=${MAX_RESULT}&q=${query}&type=video&key=${this.key}`,
-            ...this.getRequestOptions
+        const response = await this.youtube.get('search', {
+            params: {
+                part: 'snippet',
+                q: query,
+                maxResults: MAX_RESULT
+            },
         });
-        return data.items.map((item => ({ ...item, id: item.id.videoId })));
+        return response.data.items.map((item => ({ ...item, id: item.id.videoId })));
     };
 
 }
