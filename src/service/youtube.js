@@ -16,15 +16,18 @@ class Youtube {
         return { videos: response.data.items, nextPageToken: response.data.nextPageToken };
     };
 
-    async search(query) {
+    async search(query, nextToken) {
         const response = await this.youtube.get('search', {
             params: {
                 part: 'snippet',
                 q: query,
-                maxResults: MAX_RESULT
+                maxResults: MAX_RESULT,
+                type: 'video',
+                pageToken: nextToken || ''
             },
         });
-        return response.data.items.map((item => ({ ...item, id: item.id.videoId })));
+        const videos = response.data.items.map((item => ({ ...item, id: item.id.videoId })));
+        return { videos, nextPageToken: response.data.nextPageToken };
     };
 
 }

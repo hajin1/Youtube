@@ -5,6 +5,8 @@ import VideoDetail from './components/VideoDetail';
 import styles from './style/app.module.css';
 
 let nextToken = '';
+let searchNextToken = '';
+let searchQuery = '';
 
 const App = ({ youtube }) => {
   const [videos, setVideos] = useState();
@@ -15,11 +17,14 @@ const App = ({ youtube }) => {
     setSelectedVideo(video);
   }, []);
   const search = useCallback((value) => {
-    youtube.search(value)
-      .then(videos => {
-        setSelectedVideo(null);
-        setVideos(videos);
-      });
+    searchNextToken = '';
+    searchQuery = value;
+
+    youtube.search(value, searchNextToken).then(({ videos, nextPageToken }) => {
+      setSelectedVideo(null);
+      setVideos(videos);
+      searchNextToken = nextPageToken;
+    });
   }, [youtube]);
 
   const onLogoClick = useCallback(() => {
@@ -34,7 +39,11 @@ const App = ({ youtube }) => {
   }, [youtube]);
 
   const getMoreVideos = async () => {
-    if (nextToken) {
+    if (searchNextToken) {
+      const { videos, nextPageToken } = await youtube.search(searchQuery, searchNextToken);
+      setVideos((items) => [...items, ...videos]);
+      searchNextToken = nextPageToken;
+    } else if (nextToken) {
       const { videos, nextPageToken } = await youtube.mostPopular(nextToken);
       setVideos((items) => [...items, ...videos]);
       nextToken = nextPageToken;
