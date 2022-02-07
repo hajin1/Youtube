@@ -4,26 +4,30 @@ class Youtube {
         this.youtube = httpClient;
     }
 
-    async mostPopular() {
+    async mostPopular(nextToken) {
         const response = await this.youtube.get('videos', {
             params: {
                 part: 'snippet',
                 chart: 'mostPopular',
                 maxResults: MAX_RESULT,
+                pageToken: nextToken || ''
             },
         });
-        return response.data.items;
+        return { videos: response.data.items, nextPageToken: response.data.nextPageToken };
     };
 
-    async search(query) {
+    async search(query, nextToken) {
         const response = await this.youtube.get('search', {
             params: {
                 part: 'snippet',
                 q: query,
-                maxResults: MAX_RESULT
+                maxResults: MAX_RESULT,
+                type: 'video',
+                pageToken: nextToken || ''
             },
         });
-        return response.data.items.map((item => ({ ...item, id: item.id.videoId })));
+        const videos = response.data.items.map((item => ({ ...item, id: item.id.videoId })));
+        return { videos, nextPageToken: response.data.nextPageToken };
     };
 
 }
