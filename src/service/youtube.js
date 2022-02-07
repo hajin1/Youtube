@@ -4,15 +4,16 @@ class Youtube {
         this.youtube = httpClient;
     }
 
-    async mostPopular() {
+    async mostPopular(nextToken) {
         const response = await this.youtube.get('videos', {
             params: {
                 part: 'snippet',
                 chart: 'mostPopular',
                 maxResults: MAX_RESULT,
+                pageToken: nextToken || ''
             },
         });
-        return response.data.items;
+        return { videos: response.data.items, nextPageToken: response.data.nextPageToken };
     };
 
     async search(query) {

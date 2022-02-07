@@ -4,6 +4,8 @@ import Header from './components/Header';
 import VideoDetail from './components/VideoDetail';
 import styles from './style/app.module.css';
 
+let nextToken = '';
+
 const App = ({ youtube }) => {
   const [videos, setVideos] = useState();
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -25,18 +27,23 @@ const App = ({ youtube }) => {
   }, []);
 
   useEffect(() => {
-    youtube.mostPopular()
-      .then(videos => setVideos(videos));
+    youtube.mostPopular().then(({ videos, nextPageToken }) => {
+      setVideos(videos);
+      nextToken = nextPageToken;
+    });
   }, [youtube]);
 
   const getMoreVideos = async () => {
-    const res = await youtube.mostPopular();
-    setVideos((videos) => [...videos, ...res]);
+    if (nextToken) {
+      const { videos, nextPageToken } = await youtube.mostPopular(nextToken);
+      setVideos((items) => [...items, ...videos]);
+      nextToken = nextPageToken;
+    }
   };
 
   useEffect(() => {
     let observer;
-    if (target) {
+    if (target && nextToken) {
       observer = new IntersectionObserver(async ([entry], observer) => {
         if (entry.isIntersecting) {
           observer.unobserve(entry.target);
@@ -60,7 +67,7 @@ const App = ({ youtube }) => {
           <Contents videos={videos} onVideoClick={selectVideo} display={selectedVideo ? 'grid' : 'list'} />
         </div>
       </section>
-      {videos && <div style={{ width: '100px', height: '100px', backgroundColor: 'red' }} ref={setTarget} className={'targetElement'}></div>}
+      {videos && <div style={{ width: '1px', height: '1px' }} ref={setTarget} className={'targetElement'}></div>}
     </div>
   );
 }
